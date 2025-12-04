@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Турекулова Каракоз — Портфолио</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --accent: #f4b5d6;
+      --accent-soft: rgba(244,181,214,0.16);
+      --text-main: #f7f7f7;
+      --text-muted: #b4b4c2;
+      --border-soft: rgba(255,255,255,0.08);
+      --card-bg: rgba(17,17,22,0.92);
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --shadow-soft: 0 28px 80px rgba(0,0,0,0.65);
+      --blur: 22px;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top left, #262238 0, #050508 60%);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.07;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    .page {
+      min-height: 100vh;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: right;
+      max-width: 260px;
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(15,14,26,0.9);
+      border: 1px solid var(--border-soft);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff 0, #f4b5d6 40%, #f77dca 100%);
+      box-shadow: 0 0 12px rgba(244,181,214,0.9);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .tagline {
+        text-align: left;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(22,19,34,0.98), rgba(10,10,16,0.98));
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 24px 26px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(var(--blur));
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(244,181,214,0.18), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(140,120,255,0.16), transparent 55%);
+      opacity: .8;
+      mix-blend-mode: soft-light;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 5vw, 40px);
+      line-height: 1.08;
+      letter-spacing: .02em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .accent-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .accent-underline::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 58%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f4b5d6, rgba(244,181,214,0));
+      opacity: .9;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 490px;
+      margin-bottom: 18px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(244,181,214,0.36);
+      background: rgba(8,7,13,0.75);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .metrics span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border-soft);
+    }
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .bio-text {
+      font-size: 14px;
+      color: var(--text-main);
+      opacity: 0.92;
+    }
+
+    .bio-text p + p {
+      margin-top: 10px;
+    }
+
+    .bio-highlight {
+      position: relative;
+      padding: 10px 13px;
+      margin-top: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(244,181,214,0.45);
+      background: linear-gradient(120deg, rgba(244,181,214,0.18), rgba(10,9,20,0.9));
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .bio-highlight strong {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: .16em;
+      color: #3b1524;
+      opacity: .85;
+      background: rgba(247,211,231,0.76);
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-right: 8px;
+    }
+
+    .profile-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+      padding: 18px 18px 20px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(244,181,214,0.45);
+      background: radial-gradient(circle at top, rgba(244,181,214,0.22), transparent 60%);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.75);
+    }
+
+    .avatar-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.2), transparent 30%, rgba(0,0,0,0.55));
+      z-index: 1;
+    }
+
+    .avatar {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      vertical-align: middle;
+    }
+
+    .avatar-tag {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      z-index: 2;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(5,4,10,0.9);
+      border: 1px solid rgba(244,181,214,0.8);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .glass-pill {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      z-index: 2;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(12,10,18,0.85);
+      backdrop-filter: blur(16px);
+      font-size: 11px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .glass-pill span {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4df0b4;
+      box-shadow: 0 0 10px rgba(77,240,180,0.9);
+    }
+
+    .info-block {
+      padding: 12px 4px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      .info-block {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-block dt {
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #77748b;
+      margin-bottom: 3px;
+    }
+
+    .info-block dd {
+      margin: 0 0 8px;
+      color: var(--text-main);
+    }
+
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .skills-list li {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(244,181,214,0.35);
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(8,6,14,0.9);
+    }
+
+    .footer-note {
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255,255,255,0.06);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .footer-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="page">
+  <header>
+    <div class="logo">KARAKOZ / STUDIO</div>
+    <div class="tagline">
+      <span class="badge-soft">
+        <span class="badge-dot"></span>
+        открыта к сотрудничеству
+      </span>
+      <div>Графический и fashion‑дизайн, визуальные концепции и цифровые проекты.</div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- Левая колонка: текст -->
+    <section class="card">
+      <div class="card-inner">
+        <div class="hero-title">
+          <span>Турекулова Каракоз</span>
+          <div class="accent-underline">Fashion & графический дизайнер</div>
+        </div>
+
+        <p class="hero-sub">
+          Студентка Каспийского университета, которая объединяет дизайн, моду и цифровые технологии,
+          создавая проекты, где стиль, креатив и функциональность работают вместе.
+        </p>
+
+        <div class="hero-tags">
+          <span class="pill">fashion‑дизайн</span>
+          <span class="pill">графика & визуал</span>
+          <span class="pill">цифровые проекты</span>
+          <span class="pill">figma · photoshop · illustrator</span>
+        </div>
+
+        <div class="metrics">
+          <span>учебные и личные проекты</span>
+          <span>эксперименты с формой, цветом и материалами</span>
+          <span>открыта к новым коллаборациям</span>
+        </div>
+
+        <h2 class="section-title">Обо мне</h2>
+        <div class="bio-text">
+          <p>
+            Я — студентка Каспийского университета, увлечённая дизайном, модой и современными
+            цифровыми технологиями. В своих проектах стремлюсь к тому, чтобы визуальный стиль был
+            не только эстетичным, но и функциональным, понятным и удобным для людей.
+          </p>
+          <p>
+            В процессе учёбы изучаю графический и fashion‑дизайн, визуализацию, работу с цифровыми
+            инструментами и программами Figma, Photoshop и Illustrator. Люблю экспериментировать с
+            формой, цветом и материалами, чтобы каждая работа была уникальной и запоминающейся.
+          </p>
+          <p>
+            Для меня дизайн — это способ передавать идеи, эмоции и историю через образы.
+            Каждый новый проект — это вызов, возможность применить знания, развить креативность
+            и научиться чему‑то новому.
+          </p>
+          <p>
+            Я активно участвую в учебных и личных проектах, постоянно расширяю свои навыки
+            и всегда открыта для новых идей и сотрудничества. Моя миссия — создавать дизайн,
+            который вдохновляет, радует и оставляет след.
+          </p>
+        </div>
+
+        <div class="bio-highlight">
+          <strong>фокус</strong>
+          Создание цельных визуальных концепций: от идеи и референсов до цифрового прототипа,
+          презентации и готового визуала для брендов, коллекций и личных проектов.
+        </div>
+      </div>
+    </section>
+
+    <!-- Правая колонка: фото + факты -->
+    <aside class="card profile-card">
+      <div class="avatar-wrap">
+        <!-- Замените src на путь к реальному файлу с фотографией -->
+        <img class="avatar" src="photo_2025-12-04_17-44-53.jpg" alt="Турекулова Каракоз">
+        <span class="avatar-tag">portfolio 2025</span>
+        <div class="glass-pill">
+          <span></span> в процессе новых проектов
+        </div>
+      </div>
+
+      <dl class="info-block">
+        <div>
+          <dt>направление</dt>
+          <dd>Fashion‑дизайн, графический дизайн, визуальные концепции</dd>
+
+          <dt>образование</dt>
+          <dd>Студентка Каспийского университета</dd>
+
+          <dt>интересы</dt>
+          <dd>Мода, стиль, визуальные истории, цифровые технологии</dd>
+        </div>
+        <div>
+          <dt>инструменты</dt>
+          <dd>
+            <ul class="skills-list">
+              <li>Figma</li>
+              <li>Adobe Photoshop</li>
+              <li>Adobe Illustrator</li>
+              <li>Moodboard & коллажи</li>
+              <li>Цифровая визуализация</li>
+            </ul>
+          </dd>
+
+          <dt>что ищу</dt>
+          <dd>Стажировки, коллаборации, проекты в сфере моды и графики.</dd>
+        </div>
+      </dl>
+
+      <div class="footer-note">
+        <span>Готова обсудить идеи и совместные проекты.</span>
+        <span>Связаться: <a href="mailto:yourmail@example.com">yourmail@example.com</a></span>
+      </div>
+    </aside>
+
+  </main>
+</div>
+</body>
+</html>
